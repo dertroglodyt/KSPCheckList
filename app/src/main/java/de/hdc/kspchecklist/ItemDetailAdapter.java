@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import de.hdc.kspchecklist.data.CheckListItem;
+import de.hdc.kspchecklist.data.DataIO;
 
 /**
  * Created by DerTroglodyt on 2017-02-16 08:53.
@@ -19,11 +21,13 @@ import de.hdc.kspchecklist.data.CheckListItem;
  * Copyright by HDC, Germany
  */
 
-public class ItemDetailAdapter extends ArrayAdapter<CheckListItem> {
+public class ItemDetailAdapter extends ArrayAdapter<CheckListItem> implements View.OnClickListener {
 
-    public ItemDetailAdapter(Context context, ArrayList<CheckListItem> objects) {
+    public ItemDetailAdapter(Context context, String fileName, ArrayList<CheckListItem> objects) {
         super(context, 0, objects);
-        list = objects;
+        this.context = context;
+        this.fileName = fileName;
+        this.list = objects;
     }
 
     @NonNull
@@ -38,6 +42,7 @@ public class ItemDetailAdapter extends ArrayAdapter<CheckListItem> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_detail_content, parent, false);
             viewHolder.cb = (CheckBox) convertView.findViewById(R.id.checkbox);
+            viewHolder.cb.setOnClickListener(this);
             // Cache the viewHolder object inside the fresh view
             convertView.setTag(viewHolder);
         } else {
@@ -48,8 +53,9 @@ public class ItemDetailAdapter extends ArrayAdapter<CheckListItem> {
         // into the template view.
         viewHolder.cb.setText(item.name);
         viewHolder.cb.setChecked(item.checked);
+        viewHolder.cb.setTag(position);
         if (item.checked) {
-            viewHolder.cb.setBackgroundColor(Color.argb(0, 128, 128, 0));
+            viewHolder.cb.setBackgroundColor(Color.argb(64, 0, 255, 0));
         } else {
             viewHolder.cb.setBackgroundColor(Color.argb(80, 255, 255, 0));
         }
@@ -58,6 +64,22 @@ public class ItemDetailAdapter extends ArrayAdapter<CheckListItem> {
         return convertView;
     }
 
+    @Override
+    public void onClick(View view) {
+        CheckBox cb = (CheckBox) view;
+        CheckListItem cli = CheckListItem.create(cb.getText().toString(), cb.isChecked());
+        Integer i = (Integer) view.getTag();
+        list.set(i, cli);
+        try {
+            DataIO.writeLocalFile(context, fileName, list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        notifyDataSetChanged();
+    }
+
+    private final Context context;
+    private final String fileName;
     private final ArrayList<CheckListItem> list;
     // View lookup cache
     private static class ViewHolder {

@@ -13,7 +13,9 @@
         android:textSize="16dp"
         android:padding="16dp"
         android:background="#ffff00"
-        android:onClick="setChecked"
+
         />
 
 </LinearLayout>
+
+<!--android:onClick="checkClicked"-->

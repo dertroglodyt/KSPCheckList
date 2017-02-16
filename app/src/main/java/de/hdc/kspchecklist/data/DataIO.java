@@ -35,6 +35,9 @@ public class DataIO {
 
         byte[] buffer = new byte[1024];
         for(String filename : files) {
+            if (!filename.contains(".txt")) {
+                continue;
+            }
 //            final String outFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename ;
             try (InputStream in = appContext.getAssets().open(filename)
                  ; OutputStream out = appContext.openFileOutput(filename, Context.MODE_PRIVATE)) {
@@ -48,6 +51,15 @@ public class DataIO {
             } catch(Throwable e) {
                 Log.e("tag", "Failed to copy asset file: " + filename, e);
             }
+        }
+    }
+
+    public static void createLocalFile(Context appContext, String fileName) {
+        File f = new File(appContext.getFilesDir().getAbsolutePath() + "/" + fileName);
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -102,6 +114,7 @@ public class DataIO {
             String s = r.readLine();
             while (s != null) {
                 if (s.trim().isEmpty()) {
+                    s = r.readLine();
                     continue;
                 }
                 int x = s.indexOf("#");
@@ -109,7 +122,7 @@ public class DataIO {
                     // todo catch this in calling activity
                     throw new IOException("Malformed file on line " + line + ".");
                 }
-                CheckListItem cle = CheckListItem.create(s.substring(0, x), Boolean.valueOf(s.substring(x)));
+                CheckListItem cle = CheckListItem.create(s.substring(0, x), Boolean.valueOf(s.substring(x+1).toUpperCase()));
                 list.add(cle);
 
                 line += 1;

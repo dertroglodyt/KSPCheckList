@@ -16,7 +16,7 @@ public class CheckListItem {
     }
 
     public static CheckListItem create(String name, boolean checked) {
-        return new CheckListItem(name, false);
+        return new CheckListItem(name, checked);
     }
 
     @Override

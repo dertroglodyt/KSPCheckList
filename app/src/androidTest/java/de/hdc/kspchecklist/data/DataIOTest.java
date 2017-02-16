@@ -31,7 +31,7 @@ public class DataIOTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        ArrayList<CheckListItem> list = DataIO.readAssetFile(appContext, "eins.txt");
+        ArrayList<CheckListItem> list = DataIO.readAssetFile(appContext.getAssets(), "eins.txt");
     }
 
     @Test

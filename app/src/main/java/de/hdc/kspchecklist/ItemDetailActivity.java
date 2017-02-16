@@ -1,12 +1,17 @@
 package de.hdc.kspchecklist;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.CheckBox;
+import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,46 +34,92 @@ public class ItemDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.list_toolbar);
+        setSupportActionBar(myToolbar);
+
         Intent intent = getIntent();
         String message = intent.getStringExtra(DETAIL_MESSAGE);
         fileName = message + ".txt";
-        TextView header = (TextView) findViewById(R.id.header);
-        header.setText(message);
+        setTitle(message);
 
         // Construct the data source
         try {
             list = DataIO.readLocalFile(this.getApplicationContext(), fileName);
+            // Create the adapter to convert the array to views
+            adapter = new ItemDetailAdapter(this.getApplicationContext(), fileName, list);
+            ListView listView = (ListView) findViewById(R.id.item_detail_container);
+            listView.setAdapter(adapter);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // Create the adapter to convert the array to views
-        ItemDetailAdapter adapter = new ItemDetailAdapter(this.getApplicationContext(), list);
-        ListView listView = (ListView) findViewById(R.id.item_detail_container);
-        listView.setAdapter(adapter);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
     }
 
-    /** Called when the user clicks the checkbox */
-    public void setChecked(View view) {
-        CheckBox cb = (CheckBox) view;
-        CheckListItem cli = CheckListItem.create(cb.getText().toString(), cb.isChecked());
-        list.set((int) view.getTag(), cli);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.detail_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_check_all:
+                for (int i = 0; i < list.size(); i++) {
+                    CheckListItem cli = list.get(i);
+                    list.set(i, CheckListItem.create(cli.name, setChecked));
+                }
+                setChecked = !setChecked;
+                saveList();
+                adapter.notifyDataSetChanged();
+                return true;
+
+            case R.id.action_add:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("New item");
+
+                final EditText input = new EditText(this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        CheckListItem cli = CheckListItem.create(input.getText().toString());
+                        list.add(cli);
+                        saveList();
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    private boolean setChecked;
+    private String fileName;
+    private ArrayList<CheckListItem> list;
+    private ItemDetailAdapter adapter;
+
+    private void saveList() {
         try {
             DataIO.writeLocalFile(getApplicationContext(), fileName, list);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    private ArrayList<CheckListItem> list;
-    private String fileName;
 }

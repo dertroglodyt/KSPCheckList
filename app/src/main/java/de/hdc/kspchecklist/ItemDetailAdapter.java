@@ -1,0 +1,66 @@
+package de.hdc.kspchecklist;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+
+import java.util.ArrayList;
+
+import de.hdc.kspchecklist.data.CheckListItem;
+
+/**
+ * Created by DerTroglodyt on 2017-02-16 08:53.
+ * Email dertroglodyt@gmail.com
+ * Copyright by HDC, Germany
+ */
+
+public class ItemDetailAdapter extends ArrayAdapter<CheckListItem> {
+
+    public ItemDetailAdapter(Context context, ArrayList<CheckListItem> objects) {
+        super(context, 0, objects);
+        list = objects;
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        final CheckListItem item = getItem(position);
+        ItemDetailAdapter.ViewHolder viewHolder; // view lookup cache stored in tag
+
+        if (convertView == null) {
+            // If there's no view to re-use, inflate a brand new view for row
+            viewHolder = new ItemDetailAdapter.ViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.item_detail_content, parent, false);
+            viewHolder.cb = (CheckBox) convertView.findViewById(R.id.checkbox);
+            // Cache the viewHolder object inside the fresh view
+            convertView.setTag(viewHolder);
+        } else {
+            // View is being recycled, retrieve the viewHolder object from tag
+            viewHolder = (ItemDetailAdapter.ViewHolder) convertView.getTag();
+        }
+        // Populate the data from the data object via the viewHolder object
+        // into the template view.
+        viewHolder.cb.setText(item.name);
+        viewHolder.cb.setChecked(item.checked);
+        if (item.checked) {
+            viewHolder.cb.setBackgroundColor(Color.argb(0, 128, 128, 0));
+        } else {
+            viewHolder.cb.setBackgroundColor(Color.argb(80, 255, 255, 0));
+        }
+
+        // Return the completed view to render on screen
+        return convertView;
+    }
+
+    private final ArrayList<CheckListItem> list;
+    // View lookup cache
+    private static class ViewHolder {
+        CheckBox cb;
+    }
+}

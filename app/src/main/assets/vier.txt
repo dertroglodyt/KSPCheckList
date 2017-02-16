@@ -1,0 +1,4 @@
+eins#false
+zwei#true
+drei#false
+vier#true

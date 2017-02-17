@@ -1,0 +1,15 @@
+CHECK YO STAGING!
+Landing gear up
+Throttle set to 100%
+SAS on
+RCS off
+MechJeb Ascent configured
+MechJeb Ascent activated
+RPM monitors configured
+Cabin lights on
+External cameras functional
+Reserve batteries locked
+Capsule batteries locked
+RCS Tanks locked
+Generators offline
+Life support online

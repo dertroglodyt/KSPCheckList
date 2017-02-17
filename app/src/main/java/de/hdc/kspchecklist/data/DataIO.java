@@ -128,12 +128,14 @@ public class DataIO {
                     s = r.readLine();
                     continue;
                 }
+                boolean b = false;
                 int x = s.indexOf("#");
-                if (x < 0) {
-                    // todo catch this in calling activity
-                    throw new IOException("Malformed file on line " + line + ".");
+                if (x >= 0) {
+                    b = Boolean.valueOf(s.substring(x+1).toUpperCase());
+                } else {
+                    x = s.length();
                 }
-                CheckListItem cle = CheckListItem.create(s.substring(0, x), Boolean.valueOf(s.substring(x+1).toUpperCase()));
+                CheckListItem cle = CheckListItem.create(s.substring(0, x), b);
                 list.add(cle);
 
                 line += 1;

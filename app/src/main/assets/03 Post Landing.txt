@@ -1,0 +1,9 @@
+Main engine off
+Solar panels extended
+Ladder extended
+RCS off
+Gather science
+Collect & store science
+Take surface sample
+Plant flag
+Take screenshot

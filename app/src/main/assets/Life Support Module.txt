@@ -1,0 +1,22 @@
+Oxygen
+Water
+Food
+CO Scrubber
+Water Recycler
+Ladders
+Command Seat
+Parachutes
+Heatshield
+Docking port
+RCS Thruster
+RCS Tank
+Reaction Wheel
+Antenna Near
+Antenna Far
+Solar panels
+Batteries
+Reserve Battery
+Lights
+Landing Gear
+Science Equipment Orbit
+External Cameras

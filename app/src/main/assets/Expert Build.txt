@@ -1,0 +1,85 @@
+00 TWR max < 4g for each stage
+00 Sum electrical needs
+00 Calc batteries needed for max darkness
+
+01 LANDER
+01 Oxygen
+01 Water
+01 Food
+01 Ladders
+01 Command unit
+01 Parachutes
+01 Heatshield
+01 RCS Thruster
+01 RCS Tank
+01 Reaction Wheel
+01 Antenna Near
+01 Solar panels
+01 Batteries
+01 Reserve Batterie
+01 Lights
+01 Spot Light
+01 Landing Gear
+01 Science Equipment
+01 External Cameras
+01 Docking port
+
+02 RETURN VEHICLE
+02 Oxygen
+02 Water
+02 Food
+02 CO Scrubber
+02 Water Recycler
+02 Ladders
+02 Command Seat
+02 Parachutes
+02 Heat shield
+02 Escape Tower
+02 Docking port
+02 RCS Thruster
+02 RCS Tank
+02 Reaction Wheel
+02 Antenna Near
+02 Antenna Far
+02 Solar panels
+02 Batteries
+02 Reserve Batterie
+02 Lights
+02 Science Equipment Orbit
+02 External Cameras
+
+03 3rd STAGE
+03 RCS Thruster
+03 RCS Tank
+03 Reaction Wheel
+03 Antenna Near
+03 Solar panels
+03 Batteries
+03 Reserve Batteries
+03 Reentry rockets
+03 SmartPart Timer (3s)
+03 Igniter (TEATEB)
+03 Ullage Engines
+03 Seperation Engines
+
+04 2nd STAGE
+04 SmartPart Height
+04 SmartPart Height
+04 SmartPart Timer (3s)
+04 Igniter (TEATEB)
+04 Ullage Engines
+04 Separation Engines
+
+05 1st STAGE
+05 Parachutes
+05 SmartPart Fuel
+05 SmartPart Timer (2s)
+05 SmartPart Timer (3s)
+05 Igniter (TEATEB)
+05 Separation Engines
+
+06 BOOSTER
+06 Parachutes
+06 SmartPart Fuel
+06 Igniter (TEATEB)
+06 Separation Engines

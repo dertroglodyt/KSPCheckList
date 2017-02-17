@@ -1,0 +1,21 @@
+Docking port
+Ladders
+Parachutes
+Escape Tower
+Heat shield
+Decoupler beneath HS
+Oxygen
+Water
+Food
+RCS Thruster
+RCS Tank
+Reaction Wheel
+Antenna Near
+Solar panels
+Batteries
+Reserve Battery
+Lights
+Spot Lights
+Landing Gear
+Science Equipment
+External Cameras

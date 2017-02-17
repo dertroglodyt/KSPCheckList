@@ -39,6 +39,13 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean dark = sharedPrefs.getBoolean(getString(R.string.preference_theme_key), true);
+        if (dark) {
+            setTheme(R.style.AppTheme);
+        } else {
+            setTheme(R.style.AppThemeLight);
+        }
         setContentView(R.layout.activity_item_list);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.list_toolbar);
         setSupportActionBar(myToolbar);
@@ -101,7 +108,7 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
 
             case R.id.action_list_add:

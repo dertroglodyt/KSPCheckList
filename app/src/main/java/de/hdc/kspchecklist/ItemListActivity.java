@@ -9,13 +9,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ import de.hdc.kspchecklist.data.ListItem;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class ItemListActivity extends AppCompatActivity {
+public class ItemListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public final static String DETAIL_MESSAGE = "DETAIL_MESSAGE";
 
@@ -77,14 +78,14 @@ public class ItemListActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.item_list);
         assert listView != null;
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
+        registerForContextMenu(listView);
     }
 
-    /** Called when the user clicks a list item */
-    public void itemSelected(View view) {
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
           Intent intent = new Intent(this, ItemDetailActivity.class);
-//        EditText editText = (EditText) findViewById(R.id.edit_message);
-//        String message = editText.getText().toString();
-        intent.putExtra(DETAIL_MESSAGE, ((TextView) view).getText());
+        intent.putExtra(DETAIL_MESSAGE, items.get(i).name);
         startActivity(intent);
     }
 
@@ -138,6 +139,74 @@ public class ItemListActivity extends AppCompatActivity {
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId()==R.id.item_list) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            menu.setHeaderTitle("Checklist: " + items.get(info.position));
+            String[] menuItems = getResources().getStringArray(R.array.menu);
+            for (int i = 0; i<menuItems.length; i++) {
+                menu.add(Menu.NONE, i, i, menuItems[i]);
+            }
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        switch (item.getItemId()) {
+            case 0: {  // edit
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("New name");
+
+                final EditText input = new EditText(this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String name = input.getText().toString();
+                        DataIO.renameLocalFile(getApplicationContext(), items.get(info.position).name + ".txt", name + ".txt");
+                        items.set(info.position, ListItem.create(name));
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+                return true;
+            }
+            case 1: {  // delete
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Delete " + items.get(info.position))
+                        .setMessage("Do you really want to delete this checklist?");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DataIO.deleteLocalFile(getApplicationContext(), items.get(info.position).name + ".txt");
+                        items.remove(info.position);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+                return true;
+            }
+            default: return false;
         }
     }
 

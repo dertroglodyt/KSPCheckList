@@ -54,6 +54,17 @@ public class DataIO {
         }
     }
 
+    public static void deleteLocalFile(Context appContext, String fileName) {
+        File f = new File(appContext.getFilesDir().getAbsolutePath() + "/" + fileName);
+        f.delete();
+    }
+
+    public static void renameLocalFile(Context appContext, String oldFilename, String newFilename) {
+        File f = new File(appContext.getFilesDir().getAbsolutePath() + "/" + oldFilename);
+        File fn = new File(appContext.getFilesDir().getAbsolutePath() + "/" + newFilename);
+        f.renameTo(fn);
+    }
+
     public static void createLocalFile(Context appContext, String fileName) {
         File f = new File(appContext.getFilesDir().getAbsolutePath() + "/" + fileName);
         try {

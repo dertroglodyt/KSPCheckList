@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">KSPCheckList</string>
     <string name="title_item_detail">Item Detail</string>
+    <string-array name="menu">
+        <item>Edit</item>
+        <item>Delete</item>
+    </string-array>
+    <string-array name="menu_detail">
+        <item>Edit</item>
+        <item>Delete</item>
+    </string-array>
 </resources>

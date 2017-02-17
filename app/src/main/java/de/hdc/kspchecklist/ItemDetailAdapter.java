@@ -43,6 +43,7 @@ public class ItemDetailAdapter extends ArrayAdapter<CheckListItem> implements Vi
             convertView = inflater.inflate(R.layout.item_detail_content, parent, false);
             viewHolder.cb = (CheckBox) convertView.findViewById(R.id.checkbox);
             viewHolder.cb.setOnClickListener(this);
+//            viewHolder.cb.setOnLongClickListener(this);
             // Cache the viewHolder object inside the fresh view
             convertView.setTag(viewHolder);
         } else {

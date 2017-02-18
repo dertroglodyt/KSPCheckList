@@ -85,6 +85,7 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
         ListView listView = (ListView) findViewById(R.id.item_list);
         assert listView != null;
         listView.setAdapter(adapter);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
     }

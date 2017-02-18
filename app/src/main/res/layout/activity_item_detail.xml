@@ -16,13 +16,14 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         />
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/item_detail_container"
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#ff808080"
         >
-
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
     <!--<android.support.design.widget.FloatingActionButton-->
         <!--android:id="@+id/fab"-->

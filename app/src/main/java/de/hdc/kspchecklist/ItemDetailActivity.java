@@ -5,16 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.InputType;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,10 +48,15 @@ public class ItemDetailActivity extends AppCompatActivity {
         try {
             list = DataIO.readLocalFile(this.getApplicationContext(), fileName);
             // Create the adapter to convert the array to views
-            adapter = new ItemDetailAdapter(this.getApplicationContext(), fileName, list);
-            ListView listView = (ListView) findViewById(R.id.item_detail_container);
+//            adapter = new ItemDetailAdapter(this.getApplicationContext(), fileName, list);
+            adapter = new ItemDetailAdapter(this, fileName, list);
+            RecyclerView listView = (RecyclerView) findViewById(R.id.item_detail_container);
+            listView.setLayoutManager(new LinearLayoutManager(this));
+            listView.setHasFixedSize(true);
             listView.setAdapter(adapter);
-            registerForContextMenu(listView);
+//            registerForContextMenu(listView);
+            ItemTouchHelper helper = new ItemTouchHelper(new DetailTouchHelper(adapter));
+            helper.attachToRecyclerView(listView);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -114,63 +118,70 @@ public class ItemDetailActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        menu.setHeaderTitle(list.get(info.position).name);
-        String[] menuItems = getResources().getStringArray(R.array.menu_detail);
-        for (int i = 0; i<menuItems.length; i++) {
-            menu.add(Menu.NONE, i, i, menuItems[i]);
-        }
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        switch (item.getItemId()) {
-            case 0: {  // edit
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("New name");
-
-                final EditText input = new EditText(this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String name = input.getText().toString();
-                        CheckListItem cli = CheckListItem.create(name, list.get(info.position).checked);
-                        list.set(info.position, cli);
-                        try {
-                            DataIO.writeLocalFile(getApplicationContext(), fileName, list);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();
-                return true;
-            }
-            case 1: {  // delete
-                list.remove(info.position);
-                adapter.notifyDataSetChanged();
-                return true;
-            }
-            default: return false;
-        }
-    }
+//    @Override
+//    public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
+//        if (menuInfo == null ) {
+//            return;
+//        }
+//        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+//        menu.setHeaderTitle(list.get(info.position).name);
+//        String[] menuItems = getResources().getStringArray(R.array.menu_detail);
+//        for (int i = 0; i<menuItems.length; i++) {
+//            menu.add(Menu.NONE, i, i, menuItems[i]);
+//        }
+//    }
+//
+//    @Override
+//    public boolean onContextItemSelected(MenuItem item) {
+//        if (item == null ) {
+//            return false;
+//        }
+//        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+//        switch (item.getItemId()) {
+//            case 0: {  // edit
+//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setTitle("New name");
+//
+//                final EditText input = new EditText(this);
+//                input.setInputType(InputType.TYPE_CLASS_TEXT);
+//                builder.setView(input);
+//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String name = input.getText().toString();
+//                        CheckListItem cli = CheckListItem.create(name, list.get(info.position).checked);
+//                        list.set(info.position, cli);
+//                        try {
+//                            DataIO.writeLocalFile(getApplicationContext(), fileName, list);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        adapter.notifyDataSetChanged();
+//                    }
+//                });
+//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                    }
+//                });
+//
+//                builder.show();
+//                return true;
+//            }
+//            case 1: {  // delete
+//                list.remove(info.position);
+//                adapter.notifyDataSetChanged();
+//                return true;
+//            }
+//            default: return false;
+//        }
+//    }
 
     private boolean setChecked;
     private String fileName;
     private ArrayList<CheckListItem> list;
+    //    private ItemDetailAdapter adapter;
     private ItemDetailAdapter adapter;
 
     private void saveList() {

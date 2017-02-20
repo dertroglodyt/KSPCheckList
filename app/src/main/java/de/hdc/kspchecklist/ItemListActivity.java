@@ -53,12 +53,13 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
         /**
          * If installed and run for the first time, copy assets files to local storage.
          */
+        final String FIRST_RUN = "FIRSTRUN";
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean isFirstRun = wmbPreference.getBoolean("FIRS_TRUN", true);
+        boolean isFirstRun = wmbPreference.getBoolean(FIRST_RUN, true);
         if (isFirstRun) {
             // Code to run once
             SharedPreferences.Editor editor = wmbPreference.edit();
-            editor.putBoolean("FIRSTRUN", false);
+            editor.putBoolean(FIRST_RUN, false);
             editor.apply();
 
             DataIO.copyAssetsFiles(getApplicationContext());

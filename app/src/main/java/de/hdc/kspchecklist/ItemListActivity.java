@@ -18,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,13 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
         setContentView(R.layout.activity_item_list);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.list_toolbar);
         setSupportActionBar(myToolbar);
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        if (BuildConfig.DEBUG) {
+            Bundle params = new Bundle();
+            params.putString("app_started", "true");
+            mFirebaseAnalytics.logEvent("share_image", params);
+        }
 
         /**
          * If installed and run for the first time, copy assets files to local storage.
@@ -219,6 +228,7 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
         }
     }
 
+    private FirebaseAnalytics mFirebaseAnalytics;
     private ArrayList<ListItem> items;
     private ItemListAdapter adapter;
 

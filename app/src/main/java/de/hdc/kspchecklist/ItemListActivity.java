@@ -42,7 +42,7 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         Boolean dark = sharedPrefs.getBoolean(getString(R.string.preference_theme_key), true);
         if (dark) {
-            setTheme(R.style.AppTheme);
+            setTheme(R.style.AppTheme_NoActionBar);
         } else {
             setTheme(R.style.AppThemeLight);
         }

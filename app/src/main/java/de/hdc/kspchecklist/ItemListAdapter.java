@@ -18,7 +18,7 @@ import de.hdc.kspchecklist.data.ListItem;
  * Copyright by HDC, Germany
  */
 
-public class ItemListAdapter extends ArrayAdapter<ListItem> {
+class ItemListAdapter extends ArrayAdapter<ListItem> {
 
     public ItemListAdapter(Context context, ArrayList<ListItem> objects) {
         super(context, 0, objects);
@@ -26,7 +26,7 @@ public class ItemListAdapter extends ArrayAdapter<ListItem> {
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         final ListItem item = getItem(position);
         ViewHolder viewHolder; // view lookup cache stored in tag
 

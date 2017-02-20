@@ -21,7 +21,7 @@ import de.hdc.kspchecklist.data.DataIO;
  * Copyright by HDC, Germany
  */
 
-public class ItemDetailAdapterOld extends ArrayAdapter<CheckListItem> implements View.OnClickListener {
+class ItemDetailAdapterOld extends ArrayAdapter<CheckListItem> implements View.OnClickListener {
 
     public ItemDetailAdapterOld(Context context, String fileName, ArrayList<CheckListItem> objects) {
         super(context, 0, objects);
@@ -32,8 +32,13 @@ public class ItemDetailAdapterOld extends ArrayAdapter<CheckListItem> implements
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         final CheckListItem item = getItem(position);
+        if (BuildConfig.DEBUG) {
+            if (item == null) {
+                throw new RuntimeException();
+            }
+        }
         ItemDetailAdapterOld.ViewHolder viewHolder; // view lookup cache stored in tag
 
         if (convertView == null) {

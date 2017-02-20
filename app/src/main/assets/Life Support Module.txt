@@ -6,7 +6,7 @@ Water Recycler
 Ladders
 Command Seat
 Parachutes
-Heatshield
+Heat shield
 Docking port
 RCS Thruster
 RCS Tank

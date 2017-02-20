@@ -5,7 +5,7 @@ Ladder
 Antenna
 Solar panels
 Batteries
-Reserve Batterie
+Reserve Battery
 Lights
 Docking port
 Science experiments

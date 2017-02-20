@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#00ffffff"
     >
 
     <CheckBox
@@ -12,7 +11,7 @@
         android:id="@+id/checkbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:padding="16dp"
         android:background="#40ffff00"
         android:longClickable="true"

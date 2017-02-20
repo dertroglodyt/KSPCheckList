@@ -9,9 +9,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
  * Copyright by HDC, Germany
  */
 
-public class DetailTouchHelper extends ItemTouchHelper.SimpleCallback {
+class DetailTouchHelper extends ItemTouchHelper.SimpleCallback {
 
-    public DetailTouchHelper(ItemDetailAdapter adapter) {
+    DetailTouchHelper(ItemDetailAdapter adapter) {
         super(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.adapter = adapter;
     }
@@ -42,5 +42,5 @@ public class DetailTouchHelper extends ItemTouchHelper.SimpleCallback {
         super.clearView(recyclerView, viewHolder);
     }
 
-    private ItemDetailAdapter adapter;
+    private final ItemDetailAdapter adapter;
 }

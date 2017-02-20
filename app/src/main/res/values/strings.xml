@@ -5,10 +5,9 @@
         <item>Edit</item>
         <item>Delete</item>
     </string-array>
-    <string-array name="menu_detail">
-        <item>Edit</item>
-        <item>Delete</item>
-    </string-array>
 
     <string name="preference_theme_key">Dark theme</string>
+    <string name="checkall">CheckAll</string>
+    <string name="settings">Settings</string>
+    <string name="choose_a_checklist">Choose a Checklist:</string>
 </resources>

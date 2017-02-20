@@ -21,10 +21,10 @@ import de.hdc.kspchecklist.data.DataIO;
  * Copyright by HDC, Germany
  */
 
-public class ItemDetailAdapter extends RecyclerView.Adapter<ItemDetailAdapter.ViewHolder>
+class ItemDetailAdapter extends RecyclerView.Adapter<ItemDetailAdapter.ViewHolder>
         implements View.OnClickListener {   //}, View.OnCreateContextMenuListener {
 
-    public ItemDetailAdapter(Context context, String fileName, ArrayList<CheckListItem> objects) {
+    ItemDetailAdapter(Context context, String fileName, ArrayList<CheckListItem> objects) {
 //        super(context, 0, objects);
         this.context = context;
         this.fileName = fileName;
@@ -41,8 +41,7 @@ public class ItemDetailAdapter extends RecyclerView.Adapter<ItemDetailAdapter.Vi
 //        CheckBox v = (CheckBox) LayoutInflater.from(parent.getContext())
 //                .inflate(R.layout.item_detail_content, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v, this);
-        return vh;
+        return new ViewHolder(v, this);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -62,7 +61,7 @@ public class ItemDetailAdapter extends RecyclerView.Adapter<ItemDetailAdapter.Vi
         return list.size();
     }
 
-    public void remove(int position) {
+    void remove(int position) {
         list.remove(position);
         try {
             DataIO.writeLocalFile(context, fileName, list);
@@ -72,7 +71,7 @@ public class ItemDetailAdapter extends RecyclerView.Adapter<ItemDetailAdapter.Vi
         notifyItemRemoved(position);
     }
 
-    public void swap(int firstPosition, int secondPosition){
+    void swap(int firstPosition, int secondPosition){
         Collections.swap(list, firstPosition, secondPosition);
         try {
             DataIO.writeLocalFile(context, fileName, list);
@@ -82,7 +81,7 @@ public class ItemDetailAdapter extends RecyclerView.Adapter<ItemDetailAdapter.Vi
         notifyItemMoved(firstPosition, secondPosition);
     }
 
-    public void setBGColor(CheckBox cb, boolean isDragging) {
+    void setBGColor(CheckBox cb, boolean isDragging) {
         if (isDragging) {
             cb.setBackgroundColor(Color.CYAN);
         } else {
@@ -125,11 +124,11 @@ public class ItemDetailAdapter extends RecyclerView.Adapter<ItemDetailAdapter.Vi
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public CheckBox cb;
+        final CheckBox cb;
 
-        public ViewHolder(View v, ItemDetailAdapter adapter) {
+        ViewHolder(View v, ItemDetailAdapter adapter) {
             super(v);
             cb = (CheckBox) v.findViewById(R.id.checkbox);
             cb.setOnClickListener(adapter);

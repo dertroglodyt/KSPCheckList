@@ -9,14 +9,14 @@
 01 Ladders
 01 Command unit
 01 Parachutes
-01 Heatshield
+01 Heat shield
 01 RCS Thruster
 01 RCS Tank
 01 Reaction Wheel
 01 Antenna Near
 01 Solar panels
 01 Batteries
-01 Reserve Batterie
+01 Reserve Battery
 01 Lights
 01 Spot Light
 01 Landing Gear
@@ -43,7 +43,7 @@
 02 Antenna Far
 02 Solar panels
 02 Batteries
-02 Reserve Batterie
+02 Reserve Battery
 02 Lights
 02 Science Equipment Orbit
 02 External Cameras
@@ -60,7 +60,7 @@
 03 SmartPart Timer (3s)
 03 Igniter (TEATEB)
 03 Ullage Engines
-03 Seperation Engines
+03 Separation Engines
 
 04 2nd STAGE
 04 SmartPart Height

@@ -46,8 +46,6 @@ public class DataIO {
                     out.write(buffer, 0, read);
                 }
                 out.flush();
-            } catch(IOException e) {
-                Log.e("tag", "Failed to copy asset file: " + filename, e);
             } catch(Throwable e) {
                 Log.e("tag", "Failed to copy asset file: " + filename, e);
             }
@@ -74,7 +72,7 @@ public class DataIO {
         }
     }
 
-    public static ArrayList<CheckListItem> readAssetFile(AssetManager assetManager, String fileName)
+    static ArrayList<CheckListItem> readAssetFile(AssetManager assetManager, String fileName)
             throws IOException {
         return readFile(assetManager.open(fileName));
     }

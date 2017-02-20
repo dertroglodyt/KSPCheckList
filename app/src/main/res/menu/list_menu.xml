@@ -9,14 +9,14 @@
         android:id="@+id/action_list_add"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_menu_add"
-        android:title="CheckAll"
+        android:title="@string/checkall"
         />
 
     <!-- Settings, should always be in the overflow -->
     <item
         android:id="@+id/action_settings"
         app:showAsAction="never"
-        android:title="Settings"
+        android:title="@string/settings"
         />
 
 </menu>

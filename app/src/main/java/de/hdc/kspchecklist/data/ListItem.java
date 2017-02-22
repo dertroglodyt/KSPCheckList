@@ -6,7 +6,7 @@ package de.hdc.kspchecklist.data;
  * Copyright by HDC, Germany
  */
 
-public class ListItem {
+public class ListItem implements Comparable {
 
     public final String name;
 
@@ -21,5 +21,10 @@ public class ListItem {
 
     private ListItem(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.name.compareTo(o.toString());
     }
 }

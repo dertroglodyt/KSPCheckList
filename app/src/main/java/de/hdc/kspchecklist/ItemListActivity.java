@@ -21,6 +21,7 @@ import android.widget.ListView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.hdc.kspchecklist.data.DataIO;
@@ -86,6 +87,7 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
         // Construct the data source
         items = new ArrayList<>();
         List<String> list = DataIO.getDirList(this.getApplicationContext());
+        Collections.sort(list);
         for (String s : list) {
             items.add(ListItem.create(s));
         }
@@ -135,6 +137,7 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
                         String name = input.getText().toString();
                         DataIO.createLocalFile(getApplicationContext(), name + ".txt");
                         items.add(ListItem.create(name));
+                        Collections.sort(items);
                         adapter.notifyDataSetChanged();
                         Intent intent = new Intent(getApplication(), ItemDetailActivity.class);
                         intent.putExtra(DETAIL_MESSAGE, name);

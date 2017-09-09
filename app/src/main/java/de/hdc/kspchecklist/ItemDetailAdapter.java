@@ -61,14 +61,14 @@ class ItemDetailAdapter extends RecyclerView.Adapter<ItemDetailAdapter.ViewHolde
         return list.size();
     }
 
-    void remove(int position) {
-        list.remove(position);
-        try {
+    void remove(ViewHolder holder) {
+        list.remove(holder.getAdapterPosition());
+		try {
             DataIO.writeLocalFile(context, fileName, list);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        notifyItemRemoved(position);
+        notifyItemRemoved(holder.getAdapterPosition());
     }
 
     void swap(int firstPosition, int secondPosition){

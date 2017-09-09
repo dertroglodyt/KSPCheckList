@@ -25,6 +25,7 @@ import java.util.List;
 
 import de.hdc.kspchecklist.data.DataIO;
 import de.hdc.kspchecklist.data.ListItem;
+import java.io.IOException;
 
 /**
  * An activity representing a list of Items. This activity
@@ -71,7 +72,10 @@ public class ItemListActivity extends AppCompatActivity implements AdapterView.O
             editor.putBoolean(FIRST_RUN, false);
             editor.apply();
 
-            DataIO.copyAssetsFiles(getApplicationContext());
+            try {
+				DataIO.copyAssetsFiles(getApplicationContext());
+			}
+			catch (IOException e) {}
         }
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

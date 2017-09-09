@@ -25,7 +25,8 @@ class DetailTouchHelper extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         //Remove item
-        adapter.remove(viewHolder.getAdapterPosition());
+//        adapter.remove(viewHolder.getAdapterPosition());
+		adapter.remove((ItemDetailAdapter.ViewHolder) viewHolder);
     }
 
     @Override

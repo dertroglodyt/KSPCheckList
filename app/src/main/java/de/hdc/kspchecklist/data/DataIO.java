@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class DataIO {
 
-    public static void copyAssetsFiles(Context appContext) {
+    public static void copyAssetsFiles(Context appContext) throws IOException {
         String[] files;
         try {
             files = appContext.getAssets().list("");
@@ -39,15 +39,14 @@ public class DataIO {
                 continue;
             }
 //            final String outFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename ;
-            try (InputStream in = appContext.getAssets().open(filename)
-                 ; OutputStream out = appContext.openFileOutput(filename, Context.MODE_PRIVATE)) {
+            try (InputStream in = appContext.getAssets().open(filename); OutputStream out = appContext.openFileOutput(filename, Context.MODE_PRIVATE)) {
                 int read;
                 while((read = in.read(buffer)) != -1){
                     out.write(buffer, 0, read);
                 }
                 out.flush();
-            } catch(Throwable e) {
-                Log.e("tag", "Failed to copy asset file: " + filename, e);
+//            } catch(Throwable e) {
+//                Log.e("tag", "Failed to copy asset file: " + filename, e);
             }
         }
     }

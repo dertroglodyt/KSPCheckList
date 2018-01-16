@@ -46,7 +46,7 @@ class ItemDetailAdapterOld extends ArrayAdapter<CheckListItem> implements View.O
             viewHolder = new ItemDetailAdapterOld.ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_detail_content, parent, false);
-            viewHolder.cb = (CheckBox) convertView.findViewById(R.id.checkbox);
+            viewHolder.cb = convertView.findViewById(R.id.checkbox);
             viewHolder.cb.setOnClickListener(this);
 //            viewHolder.cb.setOnLongClickListener(this);
             // Cache the viewHolder object inside the fresh view
@@ -57,10 +57,11 @@ class ItemDetailAdapterOld extends ArrayAdapter<CheckListItem> implements View.O
         }
         // Populate the data from the data object via the viewHolder object
         // into the template view.
-        viewHolder.cb.setText(item.name);
-        viewHolder.cb.setChecked(item.checked);
+        assert item != null;
+        viewHolder.cb.setText(item.getName());
+        viewHolder.cb.setChecked(item.getChecked());
         viewHolder.cb.setTag(position);
-        if (item.checked) {
+        if (item.getChecked()) {
             viewHolder.cb.setBackgroundColor(Color.argb(64, 0, 255, 0));
         } else {
             viewHolder.cb.setBackgroundColor(Color.argb(80, 255, 255, 0));
@@ -73,11 +74,11 @@ class ItemDetailAdapterOld extends ArrayAdapter<CheckListItem> implements View.O
     @Override
     public void onClick(View view) {
         CheckBox cb = (CheckBox) view;
-        CheckListItem cli = CheckListItem.create(cb.getText().toString(), cb.isChecked());
+        CheckListItem cli = new CheckListItem(cb.getText().toString(), cb.isChecked());
         Integer i = (Integer) view.getTag();
         list.set(i, cli);
         try {
-            DataIO.writeLocalFile(context, fileName, list);
+            DataIO.INSTANCE.writeLocalFile(context, fileName, list);
         } catch (IOException e) {
             e.printStackTrace();
         }

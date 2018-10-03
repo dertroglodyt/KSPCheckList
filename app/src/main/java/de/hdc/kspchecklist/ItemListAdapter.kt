@@ -1,12 +1,9 @@
 package de.hdc.kspchecklist
 
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.TextView
-import de.hdc.kspchecklist.data.ListItem
+import android.content.*
+import android.view.*
+import android.widget.*
+import de.hdc.kspchecklist.data.*
 import java.util.*
 
 /**
@@ -36,7 +33,7 @@ internal class ItemListAdapter(context: Context, objects: ArrayList<ListItem>)
         }
         // Populate the data from the data object via the viewHolder object
         // into the template view.
-        viewHolder.name.text = getItem(position).name
+        viewHolder.name.text = getItem(position)?.name ?: ""
 
         return view
     }

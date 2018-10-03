@@ -1,8 +1,8 @@
 package de.hdc.kspchecklist.data
 
-import android.content.Context
-import android.content.res.AssetManager
-import android.util.Log
+import android.content.*
+import android.content.res.*
+import android.util.*
 import java.io.*
 import java.util.*
 
@@ -15,7 +15,7 @@ import java.util.*
 object DataIO {
 
     fun copyAssetsFiles(appContext: Context) {
-        val files: Array<String>
+        val files: Array<String>?
         try {
             files = appContext.assets.list("")
         } catch (e: IOException) {
@@ -120,7 +120,7 @@ object DataIO {
                 var b = false
                 var x = s.indexOf("#")
                 if (x >= 0) {
-                    b = java.lang.Boolean.valueOf(s.substring(x + 1).toUpperCase())!!
+                    b = java.lang.Boolean.valueOf(s.substring(x + 1).toUpperCase())
                 } else {
                     x = s.length
                 }

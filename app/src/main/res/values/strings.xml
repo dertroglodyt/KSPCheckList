@@ -1,13 +1,22 @@
 <resources>
+    <string name="checkall" translatable="false">CheckAll</string>
+    <string name="title_item_detail" translatable="false">Item Detail</string>
+
     <string name="app_name">KSPCheckList</string>
-    <string name="title_item_detail">Item Detail</string>
     <string-array name="menu">
-        <item>Edit</item>
+        <item>Rename</item>
         <item>Delete</item>
     </string-array>
 
     <string name="preference_theme_key">Dark theme</string>
-    <string name="checkall">CheckAll</string>
     <string name="settings">Settings</string>
-    <string name="choose_a_checklist">Choose a Checklist:</string>
+    <string name="choose_a_checklist">Choose a Checklist:  (long press for options)</string>
+    <string name="swipe_hint">Swipe to delete item</string>
+    <string name="applies_after_restart">Applies after restart.</string>
+    <string name="new_checklist">New checklist</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="new_name">New name</string>
+    <string name="confirm_delete">Do you really want to delete this checklist?</string>
+    <string name="new_item">New item</string>
 </resources>

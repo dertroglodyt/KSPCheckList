@@ -41,7 +41,7 @@ object DataIO {
                     }
                 }
             } catch (e: Throwable) {
-                Log.e("tag", "Failed to copy asset file: " + filename, e)
+                Log.e("tag", "Failed to copy asset file: $filename", e)
             }
 
         }
@@ -93,7 +93,7 @@ object DataIO {
     fun getDirList(appContext: Context): ArrayList<String> {
         val list = ArrayList<String>()
         val dir = File(appContext.filesDir.absolutePath)
-        for (f in dir.listFiles { file, s -> s.endsWith(".txt") }) {
+        for (f in dir.listFiles { _, s -> s.endsWith(".txt") }) {
             var s = f.name
             val x = s.lastIndexOf('.')
             if (x >= 0) {

@@ -9,7 +9,7 @@ package de.hdc.kspchecklist.data
 class CheckListItem constructor(val name: String, val checked: Boolean = false) {
 
     override fun toString(): String {
-        return name + ": " + checked
+        return "$name: $checked"
     }
 
 }

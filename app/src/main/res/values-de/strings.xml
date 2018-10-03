@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KSPCheckList</string>
+    <string-array name="menu">
+        <item>Name ändern</item>
+        <item>Löschen</item>
+    </string-array>
+    <string name="swipe_hint">Wischen zum löschen</string>
+    <string name="choose_a_checklist">Wähle eine Liste:  (lange drücken für Optionen)</string>
+    <string name="settings">Einstellungen</string>
+    <string name="preference_theme_key">Dunkles Theme</string>
+    <string name="applies_after_restart">Wirksam nach Neustart</string>
+    <string name="new_checklist">Neue Liste</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="new_name">Neuer Name</string>
+    <string name="confirm_delete">Wollen Sie diese Liste wirklich löschen?</string>
+    <string name="new_item">Neuer Eintrag</string>
+</resources>

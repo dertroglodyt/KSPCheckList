@@ -4,7 +4,7 @@
         android:key="@string/preference_theme_key"
         android:title="Dark theme"
         android:defaultValue="true"
-        android:summary="Applies after restart."
+        android:summary="@string/applies_after_restart"
         />
 </PreferenceScreen>
     <!--<CheckBoxPreference-->

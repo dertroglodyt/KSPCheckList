@@ -15,7 +15,8 @@ import java.util.*
  * Copyright by HDC, Germany
  */
 
-internal class ItemListAdapter(context: Context, objects: ArrayList<ListItem>) : ArrayAdapter<ListItem>(context, 0, objects) {
+internal class ItemListAdapter(context: Context, objects: ArrayList<ListItem>)
+    : ArrayAdapter<ListItem>(context, 0, objects) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view: View
@@ -25,8 +26,7 @@ internal class ItemListAdapter(context: Context, objects: ArrayList<ListItem>) :
             // If there's no view to re-use, inflate a brand new view for row
             val inflater = LayoutInflater.from(context)
             view = inflater.inflate(R.layout.item_list_content, parent, false)
-            viewHolder = ViewHolder()
-            viewHolder.name = view.findViewById<View>(R.id.content) as TextView
+            viewHolder = ViewHolder(view.findViewById<View>(R.id.content) as TextView)
             // Cache the viewHolder object inside the fresh view
             view.tag = viewHolder
         } else {
@@ -36,11 +36,11 @@ internal class ItemListAdapter(context: Context, objects: ArrayList<ListItem>) :
         }
         // Populate the data from the data object via the viewHolder object
         // into the template view.
-        viewHolder.name?.text = getItem(position).name
+        viewHolder.name.text = getItem(position).name
 
         return view
     }
 
     // View lookup cache
-    private class ViewHolder(var name: TextView? = null)
+    private class ViewHolder(val name: TextView)
 }

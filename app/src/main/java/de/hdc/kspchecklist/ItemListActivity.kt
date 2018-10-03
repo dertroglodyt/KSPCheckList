@@ -1,23 +1,18 @@
 package de.hdc.kspchecklist
 
-import android.content.Intent
-import android.os.Bundle
-import android.preference.PreferenceManager
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
-import android.text.InputType
-import android.view.ContextMenu
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
-import android.widget.EditText
-import android.widget.ListView
-import com.google.firebase.analytics.FirebaseAnalytics
-import de.hdc.kspchecklist.data.DataIO
-import de.hdc.kspchecklist.data.ListItem
+import android.content.*
+import android.os.*
+import android.preference.*
+import android.support.v7.app.*
+import android.text.*
+import android.view.*
+import android.widget.*
+import com.google.firebase.analytics.*
+import de.hdc.kspchecklist.data.*
+import kotlinx.android.synthetic.main.activity_item_list.*
 import java.util.*
+
+private const val FIRST_RUN = "FIRSTRUN"
 
 /**
  * An activity representing a list of Items. This activity
@@ -29,9 +24,8 @@ import java.util.*
  */
 class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
-    private var mFirebaseAnalytics: FirebaseAnalytics? = null
-    private var items: ArrayList<ListItem>? = null
-    private var adapter: ItemListAdapter? = null
+    private lateinit var items: ArrayList<ListItem>
+    private lateinit var adapter: ItemListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,20 +37,19 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
             setTheme(R.style.AppThemeLight)
         }
         setContentView(R.layout.activity_item_list)
-        val myToolbar = findViewById<View>(R.id.list_toolbar) as Toolbar
-        setSupportActionBar(myToolbar)
+        setSupportActionBar(list_toolbar)
+
         // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        val mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         if (BuildConfig.DEBUG) {
             val params = Bundle()
             params.putString("app_started", "true")
-            mFirebaseAnalytics!!.logEvent("share_image", params)
+            mFirebaseAnalytics.logEvent("share_image", params)
         }
 
         /**
          * If installed and run for the first time, copy assets files to local storage.
          */
-        val FIRST_RUN = "FIRSTRUN"
         val wmbPreference = PreferenceManager.getDefaultSharedPreferences(this)
         val isFirstRun = wmbPreference.getBoolean(FIRST_RUN, true)
         if (isFirstRun) {
@@ -80,23 +73,22 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         // Construct the data source
         items = ArrayList()
         val list = DataIO.getDirList(this.applicationContext)
-        Collections.sort(list)
+        list.sort()
         for (s in list) {
-            items!!.add(ListItem.create(s))
+            items.add(ListItem.create(s))
         }
         // Create the adapter to convert the array to views
-        adapter = ItemListAdapter(this, items!!)
+        adapter = ItemListAdapter(this, items)
 
-        val listView = findViewById<View>(R.id.item_list) as ListView
-        listView.adapter = adapter
-        listView.choiceMode = ListView.CHOICE_MODE_SINGLE
-        listView.onItemClickListener = this
-        registerForContextMenu(listView)
+        item_list.adapter = adapter
+        item_list.choiceMode = ListView.CHOICE_MODE_SINGLE
+        item_list.onItemClickListener = this
+        registerForContextMenu(item_list)
     }
 
     override fun onItemClick(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
         val intent = Intent(this, ItemDetailActivity::class.java)
-        intent.putExtra(DETAIL_MESSAGE, items!![i].name)
+        intent.putExtra(DETAIL_MESSAGE, items[i].name)
         startActivity(intent)
     }
 
@@ -116,22 +108,22 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
             R.id.action_list_add -> {
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("New checklist")
+                builder.setTitle(getString(R.string.new_checklist))
 
                 val input = EditText(this)
                 input.inputType = InputType.TYPE_CLASS_TEXT
                 builder.setView(input)
-                builder.setPositiveButton("OK") { dialog, which ->
+                builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
                     val name = input.text.toString()
-                    DataIO.createLocalFile(applicationContext, name + ".txt")
-                    items!!.add(ListItem.create(name))
-                    Collections.sort(items!!)
-                    adapter!!.notifyDataSetChanged()
+                    DataIO.createLocalFile(applicationContext, "$name.txt")
+                    items.add(ListItem.create(name))
+                    items.sort()
+                    adapter.notifyDataSetChanged()
                     val intent = Intent(application, ItemDetailActivity::class.java)
                     intent.putExtra(DETAIL_MESSAGE, name)
                     startActivity(intent)
                 }
-                builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+                builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
 
                 builder.show()
 
@@ -148,7 +140,7 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo) {
         if (v.id == R.id.item_list) {
             val info = menuInfo as AdapterView.AdapterContextMenuInfo
-            menu.setHeaderTitle("Checklist: " + items!![info.position])
+            menu.setHeaderTitle("Checklist: " + items[info.position])
             val menuItems = resources.getStringArray(R.array.menu)
             for (i in menuItems.indices) {
                 menu.add(Menu.NONE, i, i, menuItems[i])
@@ -161,32 +153,32 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         when (item.itemId) {
             0 -> {  // edit
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("New name")
+                builder.setTitle(getString(R.string.new_name))
 
                 val input = EditText(this)
                 input.inputType = InputType.TYPE_CLASS_TEXT
                 builder.setView(input)
-                builder.setPositiveButton("OK") { dialog, which ->
+                builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
                     val name = input.text.toString()
-                    DataIO.renameLocalFile(applicationContext, items!![info.position].name + ".txt", name + ".txt")
-                    items!![info.position] = ListItem.create(name)
-                    adapter!!.notifyDataSetChanged()
+                    DataIO.renameLocalFile(applicationContext, items[info.position].name + ".txt", "$name.txt")
+                    items[info.position] = ListItem.create(name)
+                    adapter.notifyDataSetChanged()
                 }
-                builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+                builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
 
                 builder.show()
                 return true
             }
             1 -> {  // delete
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("Delete " + items!![info.position])
-                        .setMessage("Do you really want to delete this checklist?")
-                builder.setPositiveButton("OK") { dialog, which ->
-                    DataIO.deleteLocalFile(applicationContext, items!![info.position].name + ".txt")
-                    items!!.removeAt(info.position)
-                    adapter!!.notifyDataSetChanged()
+                builder.setTitle(items[info.position].toString())
+                        .setMessage(getString(R.string.confirm_delete))
+                builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+                    DataIO.deleteLocalFile(applicationContext, items[info.position].name + ".txt")
+                    items.removeAt(info.position)
+                    adapter.notifyDataSetChanged()
                 }
-                builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+                builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
 
                 builder.show()
                 return true
@@ -197,7 +189,7 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     companion object {
 
-        val DETAIL_MESSAGE = "DETAIL_MESSAGE"
+        const val DETAIL_MESSAGE = "DETAIL_MESSAGE"
     }
 
 }

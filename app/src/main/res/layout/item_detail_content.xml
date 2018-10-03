@@ -16,7 +16,7 @@
         android:background="#40ffff00"
         android:longClickable="true"
         android:clickable="true"
-        />
+        android:focusable="true" />
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

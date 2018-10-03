@@ -18,9 +18,10 @@ import java.util.*
  * Copyright by HDC, Germany
  */
 
-internal class ItemDetailAdapter//}, View.OnCreateContextMenuListener {
-
-(private val context: Context, private val fileName: String, private val list: ArrayList<CheckListItem>)//        super(context, 0, objects);
+internal class ItemDetailAdapter(
+        private val context: Context,
+        private val fileName: String,
+        private val list: ArrayList<CheckListItem>)
     : RecyclerView.Adapter<ItemDetailAdapter.ViewHolder>(), View.OnClickListener {
 
     // Create new views (invoked by the layout manager)
@@ -117,10 +118,9 @@ internal class ItemDetailAdapter//}, View.OnCreateContextMenuListener {
     // you provide access to all the views for a data item in a view holder
     internal class ViewHolder(v: View, adapter: ItemDetailAdapter) : RecyclerView.ViewHolder(v) {
         // each data item is just a string in this case
-        val cb: CheckBox
+        val cb: CheckBox = v.findViewById<View>(R.id.checkbox) as CheckBox
 
         init {
-            cb = v.findViewById<View>(R.id.checkbox) as CheckBox
             cb.setOnClickListener(adapter)
             //            cb.setOnCreateContextMenuListener(adapter);
         }

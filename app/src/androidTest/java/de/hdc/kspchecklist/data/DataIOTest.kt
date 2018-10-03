@@ -1,9 +1,7 @@
 package de.hdc.kspchecklist.data
 
 import android.support.test.InstrumentationRegistry
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.util.*
 
@@ -13,18 +11,6 @@ import java.util.*
  * Copyright by HDC, Germany
  */
 class DataIOTest {
-    @Before
-    @Throws(Exception::class)
-    fun setUp() {
-
-    }
-
-    @After
-    @Throws(Exception::class)
-    fun tearDown() {
-
-    }
-
     @Test
     @Throws(Exception::class)
     fun readAssetFile() {
@@ -46,6 +32,6 @@ class DataIOTest {
         DataIO.writeLocalFile(appContext, "eins.txt", list)
 
         val list2 = DataIO.readLocalFile(appContext, "eins.txt")
-        Assert.assertTrue(list2.size == 3)
+        assertTrue(list2.size == 3)
     }
 }

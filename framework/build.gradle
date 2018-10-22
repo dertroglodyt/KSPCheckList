@@ -1,0 +1,14 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation project(':domain')
+    implementation project(':data')
+    implementation 'androidx.test:runner:1.1.0-beta02'
+}
+
+//sourceSets {
+//    main.kotlin.srcDirs += 'src/main/kotlin'
+//    main.java.srcDirs += 'src/main/java'
+//}

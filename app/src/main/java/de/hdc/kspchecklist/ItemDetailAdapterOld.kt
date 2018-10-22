@@ -5,6 +5,7 @@ import android.graphics.*
 import android.view.*
 import android.widget.*
 import de.hdc.kspchecklist.data.*
+import de.hdc.kspchecklist.domain.*
 import java.io.*
 import java.util.*
 
@@ -14,7 +15,11 @@ import java.util.*
  * Copyright by HDC, Germany
  */
 
-internal class ItemDetailAdapterOld(private val aContext: Context, private val fileName: String, private val list: ArrayList<CheckListItem>)
+internal class ItemDetailAdapterOld(
+    private val aContext: Context,
+    private val persitence: CheckListPersistenceSource,
+    private val fileName: String,
+    private val list: ArrayList<CheckListItem>)
     : ArrayAdapter<CheckListItem>(aContext, 0, list), View.OnClickListener {
 
     override fun getView(position: Int, aConvertView: View?, parent: ViewGroup): View {
@@ -63,7 +68,7 @@ internal class ItemDetailAdapterOld(private val aContext: Context, private val f
         val i = view.getTag() as Int
         list[i] = cli
         try {
-            DataIO.writeLocalFile(aContext, fileName, list)
+            persitence.saveList(fileName, list)
         } catch (e: IOException) {
             e.printStackTrace()
         }

@@ -1,8 +1,9 @@
-package de.hdc.kspchecklist.data
+package de.hdc.framework
 
 import android.content.*
 import android.content.res.*
 import android.util.*
+import de.hdc.kspchecklist.domain.*
 import java.io.*
 import java.util.*
 
@@ -14,7 +15,7 @@ import java.util.*
 
 object DataIO {
 
-    fun copyAssetsFiles(appContext: Context) {
+    private fun copyAssetsFiles(appContext: Context) {
         val files: Array<String>?
         try {
             files = appContext.assets.list("")
@@ -47,18 +48,18 @@ object DataIO {
         }
     }
 
-    fun deleteLocalFile(appContext: Context, fileName: String) {
+    private fun deleteLocalFile(appContext: Context, fileName: String) {
         val f = File(appContext.filesDir.absolutePath + "/" + fileName)
         f.delete()
     }
 
-    fun renameLocalFile(appContext: Context, oldFilename: String, newFilename: String) {
+    private fun renameLocalFile(appContext: Context, oldFilename: String, newFilename: String) {
         val f = File(appContext.filesDir.absolutePath + "/" + oldFilename)
         val fn = File(appContext.filesDir.absolutePath + "/" + newFilename)
         f.renameTo(fn)
     }
 
-    fun createLocalFile(appContext: Context, fileName: String) {
+    private fun createLocalFile(appContext: Context, fileName: String) {
         val f = File(appContext.filesDir.absolutePath + "/" + fileName)
         try {
             f.createNewFile()
@@ -69,18 +70,18 @@ object DataIO {
     }
 
     @Throws(IOException::class)
-    internal fun readAssetFile(assetManager: AssetManager, fileName: String): ArrayList<CheckListItem> {
+    private fun readAssetFile(assetManager: AssetManager, fileName: String): ArrayList<CheckListItem> {
         return readFile(assetManager.open(fileName))
     }
 
     @Throws(IOException::class)
-    fun readLocalFile(appContext: Context, fileName: String): ArrayList<CheckListItem> {
+    private fun readLocalFile(appContext: Context, fileName: String): ArrayList<CheckListItem> {
         return readFile(FileInputStream(File(
-                appContext.filesDir.absolutePath + "/" + fileName)))
+            appContext.filesDir.absolutePath + "/" + fileName)))
     }
 
     @Throws(IOException::class)
-    fun writeLocalFile(appContext: Context, fileName: String, list: ArrayList<CheckListItem>) {
+    private fun writeLocalFile(appContext: Context, fileName: String, list: ArrayList<CheckListItem>) {
         BufferedWriter(FileWriter(
                 File(appContext.filesDir.absolutePath + "/" + fileName))).use { w ->
             for (cle in list) {
@@ -90,7 +91,7 @@ object DataIO {
         }
     }
 
-    fun getDirList(appContext: Context): ArrayList<String> {
+    private fun getDirList(appContext: Context): ArrayList<String> {
         val list = ArrayList<String>()
         val dir = File(appContext.filesDir.absolutePath)
         for (f in dir.listFiles { _, s -> s.endsWith(".txt") }) {

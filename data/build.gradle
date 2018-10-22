@@ -1,0 +1,12 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':domain')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
+//sourceSets {
+//    main.kotlin.srcDirs += 'src/main/kotlin'
+//    main.java.srcDirs += 'src/main/java'
+//}

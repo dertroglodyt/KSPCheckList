@@ -1,18 +1,16 @@
 package de.hdc.kspchecklist
 
-import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.helper.ItemTouchHelper
-import android.text.InputType
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.EditText
-import de.hdc.kspchecklist.data.CheckListItem
-import de.hdc.kspchecklist.data.DataIO
+import android.os.*
+import android.text.*
+import android.view.*
+import android.widget.*
+import androidx.appcompat.app.*
+import androidx.recyclerview.widget.*
+import de.hdc.framework.*
+import de.hdc.kspchecklist.data.*
+import de.hdc.kspchecklist.domain.*
 import kotlinx.android.synthetic.main.activity_item_detail.*
-import java.io.IOException
+import java.io.*
 import java.util.*
 
 /**
@@ -22,6 +20,8 @@ import java.util.*
  * in a [ItemListActivity].
  */
 class ItemDetailActivity : AppCompatActivity() {
+
+  private val persistence: CheckListPersistenceSource = CheckListPersistenceImpl(applicationContext)
 
     /*
         @Override
@@ -102,10 +102,11 @@ class ItemDetailActivity : AppCompatActivity() {
 
         // Construct the data source
         try {
-            list = DataIO.readLocalFile(this.applicationContext, fileName)
+            list = persistence.getCheckListItems(fileName)
+//            list = DataIO.readLocalFile(this.applicationContext, fileName)
             // Create the adapter to convert the array to views
             //            adapter = new ItemDetailAdapter(this.getApplicationContext(), fileName, list);
-            adapter = ItemDetailAdapter(this, fileName, list)
+            adapter = ItemDetailAdapter(this, persistence, fileName, list)
 
             item_detail_container.layoutManager = LinearLayoutManager(this)
             item_detail_container.setHasFixedSize(true)
@@ -168,7 +169,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
     private fun saveList() {
         try {
-            DataIO.writeLocalFile(applicationContext, fileName, list)
+            persistence.saveList(fileName, list)
         } catch (e: IOException) {
             e.printStackTrace()
         }

@@ -3,12 +3,14 @@ package de.hdc.kspchecklist
 import android.content.*
 import android.os.*
 import android.preference.*
-import android.support.v7.app.*
 import android.text.*
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.*
 import com.google.firebase.analytics.*
+import de.hdc.framework.*
 import de.hdc.kspchecklist.data.*
+import de.hdc.kspchecklist.domain.*
 import kotlinx.android.synthetic.main.activity_item_list.*
 import java.util.*
 
@@ -24,8 +26,9 @@ private const val FIRST_RUN = "FIRSTRUN"
  */
 class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
-    private lateinit var items: ArrayList<ListItem>
+    private lateinit var items: ArrayList<CheckList>
     private lateinit var adapter: ItemListAdapter
+    private val persistence: CheckListPersistenceSource = CheckListPersistenceImpl(applicationContext)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +61,7 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
             editor.putBoolean(FIRST_RUN, false)
             editor.apply()
 
-            DataIO.copyAssetsFiles(applicationContext)
+            persistence.copyAssetsFiles()
         }
 
         //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -71,12 +74,8 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         //        });
 
         // Construct the data source
-        items = ArrayList()
-        val list = DataIO.getDirList(this.applicationContext)
-        list.sort()
-        for (s in list) {
-            items.add(ListItem.create(s))
-        }
+        items = persistence.getLists()
+        items.sort()
         // Create the adapter to convert the array to views
         adapter = ItemListAdapter(this, items)
 
@@ -115,8 +114,9 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                 builder.setView(input)
                 builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
                     val name = input.text.toString()
-                    DataIO.createLocalFile(applicationContext, "$name.txt")
-                    items.add(ListItem.create(name))
+                    persistence.addCheckList("$name.txt")
+//                    DataIO.createLocalFile(applicationContext, "$name.txt")
+                    items.add(CheckList(name))
                     items.sort()
                     adapter.notifyDataSetChanged()
                     val intent = Intent(application, ItemDetailActivity::class.java)
@@ -160,8 +160,8 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                 builder.setView(input)
                 builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
                     val name = input.text.toString()
-                    DataIO.renameLocalFile(applicationContext, items[info.position].name + ".txt", "$name.txt")
-                    items[info.position] = ListItem.create(name)
+                    persistence.renameList(items[info.position].name + ".txt", "$name.txt")
+                    items[info.position] = CheckList(name)
                     adapter.notifyDataSetChanged()
                 }
                 builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
@@ -174,7 +174,7 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                 builder.setTitle(items[info.position].toString())
                         .setMessage(getString(R.string.confirm_delete))
                 builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
-                    DataIO.deleteLocalFile(applicationContext, items[info.position].name + ".txt")
+                    persistence.deleteList(items[info.position].name + ".txt")
                     items.removeAt(info.position)
                     adapter.notifyDataSetChanged()
                 }

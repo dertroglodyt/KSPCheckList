@@ -1,15 +1,13 @@
 package de.hdc.kspchecklist
 
-import android.content.Context
-import android.graphics.Color
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.CheckBox
-import de.hdc.kspchecklist.data.CheckListItem
-import de.hdc.kspchecklist.data.DataIO
-import java.io.IOException
+import android.content.*
+import android.graphics.*
+import android.view.*
+import android.widget.*
+import androidx.recyclerview.widget.*
+import de.hdc.kspchecklist.data.*
+import de.hdc.kspchecklist.domain.*
+import java.io.*
 import java.util.*
 
 /**
@@ -20,6 +18,7 @@ import java.util.*
 
 internal class ItemDetailAdapter(
         private val context: Context,
+        private val persistence: CheckListPersistenceSource,
         private val fileName: String,
         private val list: ArrayList<CheckListItem>)
     : RecyclerView.Adapter<ItemDetailAdapter.ViewHolder>(), View.OnClickListener {
@@ -54,7 +53,7 @@ internal class ItemDetailAdapter(
     fun remove(position: Int) {
         list.removeAt(position)
         try {
-            DataIO.writeLocalFile(context, fileName, list)
+            persistence.saveList(fileName, list)
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -65,7 +64,7 @@ internal class ItemDetailAdapter(
     fun swap(firstPosition: Int, secondPosition: Int) {
         Collections.swap(list, firstPosition, secondPosition)
         try {
-            DataIO.writeLocalFile(context, fileName, list)
+            persistence.saveList(fileName, list)
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -92,7 +91,7 @@ internal class ItemDetailAdapter(
         val i = view.getTag() as Int
         list[i] = cli
         try {
-            DataIO.writeLocalFile(context, fileName, list)
+            persistence.saveList(fileName, list)
         } catch (e: IOException) {
             e.printStackTrace()
         }

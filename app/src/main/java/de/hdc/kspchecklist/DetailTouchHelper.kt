@@ -1,7 +1,6 @@
 package de.hdc.kspchecklist
 
-import android.support.v7.widget.*
-import android.support.v7.widget.helper.*
+import androidx.recyclerview.widget.*
 
 /**
  * Created by DerTroglodyt on 2017-02-18 10:12.

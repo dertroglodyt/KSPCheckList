@@ -1,8 +1,9 @@
-package de.hdc.kspchecklist.data
+package de.hdc.framework
 
-import android.support.test.InstrumentationRegistry
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import androidx.test.*
+import de.hdc.kspchecklist.domain.*
+import org.junit.*
+import org.junit.Assert.*
 import java.util.*
 
 /**

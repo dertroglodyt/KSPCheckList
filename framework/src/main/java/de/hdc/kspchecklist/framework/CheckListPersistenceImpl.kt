@@ -1,4 +1,4 @@
-package de.hdc.framework
+package de.hdc.kspchecklist.framework
 
 import android.content.*
 import android.util.*

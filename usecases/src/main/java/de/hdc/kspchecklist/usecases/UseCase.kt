@@ -1,4 +1,4 @@
-package de.hdc.checklist.usecases
+package de.hdc.kspchecklist.usecases
 
 import de.hdc.kspchecklist.domain.*
 import kotlinx.coroutines.*

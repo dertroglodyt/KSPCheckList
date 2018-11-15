@@ -11,6 +11,7 @@ import com.google.firebase.analytics.*
 import de.hdc.framework.*
 import de.hdc.kspchecklist.data.*
 import de.hdc.kspchecklist.domain.*
+import de.hdc.kspchecklist.framework.*
 import kotlinx.android.synthetic.main.activity_item_list.*
 import java.util.*
 

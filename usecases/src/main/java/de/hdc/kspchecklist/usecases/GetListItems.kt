@@ -1,5 +1,6 @@
-package de.hdc.checklist.usecases
+package de.hdc.kspchecklist.usecases
 
+import de.hdc.checklist.usecases.*
 import de.hdc.kspchecklist.data.*
 import de.hdc.kspchecklist.domain.*
 

@@ -1,11 +1,19 @@
-apply plugin: 'java-library'
+//apply plugin: 'java-library'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation project(':domain')
-    implementation project(':data')
-    implementation 'androidx.test:runner:1.1.0-beta02'
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    api project(':domain')
+    api project(':data')
+    api 'androidx.test:runner:1.1.0'
 }
 
 //sourceSets {

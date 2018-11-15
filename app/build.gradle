@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
+
 
 android {
     compileSdkVersion 28
@@ -27,23 +29,21 @@ android {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation project(':framework')
+    implementation project(':data')
+    implementation project(':domain')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.firebase:firebase-crash:16.2.1'
-    implementation 'com.google.firebase:firebase-core:16.0.4'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.71'
+    implementation 'com.google.firebase:firebase-core:16.0.5'
     implementation 'junit:junit:4.12'
-    implementation 'androidx.test:runner:1.1.0-beta02'
-    implementation project(':data')
-    implementation project(':domain')
-    implementation project(':framework')
+    implementation 'androidx.test:runner:1.1.0'
 }
 
-
-apply plugin: 'com.google.gms.google-services'
 
 //repositories {
 //    mavenCentral()

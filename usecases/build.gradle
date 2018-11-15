@@ -1,13 +1,21 @@
-apply plugin: 'java-library'
+//apply plugin: 'java-library'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+}
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':domain')
-    implementation project(':data')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.30.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.30.2'
-//    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0-RC1'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':domain')
+    api project(':data')
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.30.2-eap13'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.30.2-eap13'
+    //    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0-RC1'
 }
 kotlin {
     experimental {

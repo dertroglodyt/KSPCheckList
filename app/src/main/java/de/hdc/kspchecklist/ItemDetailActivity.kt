@@ -21,7 +21,9 @@ import java.util.*
  */
 class ItemDetailActivity : AppCompatActivity() {
 
-  private val persistence: CheckListPersistenceSource = CheckListPersistenceImpl(applicationContext)
+  private val persistence: CheckListPersistenceSource by lazy {
+    CheckListPersistenceImpl(applicationContext)
+  }
 
     /*
         @Override

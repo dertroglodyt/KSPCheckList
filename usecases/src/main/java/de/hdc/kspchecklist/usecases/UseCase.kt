@@ -1,7 +1,7 @@
 package de.hdc.checklist.usecases
 
 import de.hdc.kspchecklist.domain.*
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 
 /**
  * Created by DerTroglodyt on 2018-10-18 17:27.

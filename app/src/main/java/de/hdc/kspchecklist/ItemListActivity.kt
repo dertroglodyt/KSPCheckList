@@ -28,10 +28,13 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     private lateinit var items: ArrayList<CheckList>
     private lateinit var adapter: ItemListAdapter
-    private val persistence: CheckListPersistenceSource = CheckListPersistenceImpl(applicationContext)
+    private val persistence: CheckListPersistenceSource by lazy {
+      CheckListPersistenceImpl(applicationContext)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
         val dark = sharedPrefs.getBoolean(getString(R.string.preference_theme_key), true)
         if (dark) {

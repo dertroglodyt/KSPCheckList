@@ -17,10 +17,5 @@ dependencies {
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.30.2-eap13'
     //    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0-RC1'
 }
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
 
 

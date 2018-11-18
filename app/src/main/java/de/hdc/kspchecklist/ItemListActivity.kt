@@ -8,7 +8,6 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.*
 import com.google.firebase.analytics.*
-import de.hdc.framework.*
 import de.hdc.kspchecklist.data.*
 import de.hdc.kspchecklist.domain.*
 import de.hdc.kspchecklist.framework.*
@@ -120,9 +119,7 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                     val name = input.text.toString()
                     persistence.addCheckList("$name.txt")
 //                    DataIO.createLocalFile(applicationContext, "$name.txt")
-                    items.add(CheckList(name))
-                    items.sort()
-                    adapter.notifyDataSetChanged()
+                    refreshAdapter()
                     val intent = Intent(application, ItemDetailActivity::class.java)
                     intent.putExtra(DETAIL_MESSAGE, name)
                     startActivity(intent)
@@ -165,8 +162,8 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                 builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
                     val name = input.text.toString()
                     persistence.renameList(items[info.position].name + ".txt", "$name.txt")
-                    items[info.position] = CheckList(name)
-                    adapter.notifyDataSetChanged()
+//                    items[info.position] = CheckList(name)
+                    refreshAdapter()
                 }
                 builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
 
@@ -179,8 +176,8 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                         .setMessage(getString(R.string.confirm_delete))
                 builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
                     persistence.deleteList(items[info.position].name + ".txt")
-                    items.removeAt(info.position)
-                    adapter.notifyDataSetChanged()
+//                    items.removeAt(info.position)ä
+                    refreshAdapter()
                 }
                 builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
 
@@ -189,6 +186,12 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
             }
             else -> return false
         }
+    }
+
+    private fun refreshAdapter() {
+        adapter.clear()
+        adapter.addAll(persistence.getLists())
+        adapter.notifyDataSetChanged()
     }
 
     companion object {

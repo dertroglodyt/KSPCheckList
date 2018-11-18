@@ -6,7 +6,6 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.*
 import androidx.recyclerview.widget.*
-import de.hdc.framework.*
 import de.hdc.kspchecklist.data.*
 import de.hdc.kspchecklist.domain.*
 import de.hdc.kspchecklist.framework.*

@@ -13,7 +13,7 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api project(':domain')
     api project(':data')
-    api 'androidx.test:runner:1.1.0'
+    api 'androidx.test:runner:1.1.1'
 }
 
 //sourceSets {

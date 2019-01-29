@@ -1,16 +1,22 @@
 package de.hdc.kspchecklist
 
-import android.content.*
-import android.os.*
-import android.preference.*
-import android.text.*
-import android.view.*
-import android.widget.*
-import androidx.appcompat.app.*
-import com.google.firebase.analytics.*
-import de.hdc.kspchecklist.data.*
-import de.hdc.kspchecklist.domain.*
-import de.hdc.kspchecklist.framework.*
+import android.content.Intent
+import android.os.Bundle
+import android.preference.PreferenceManager
+import android.text.InputType
+import android.view.ContextMenu
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.EditText
+import android.widget.ListView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.analytics.FirebaseAnalytics
+import de.hdc.kspchecklist.data.CheckListPersistenceSource
+import de.hdc.kspchecklist.domain.CheckList
+import de.hdc.kspchecklist.framework.CheckListPersistenceImpl
 import kotlinx.android.synthetic.main.activity_item_list.*
 import java.util.*
 
@@ -29,7 +35,7 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     private lateinit var items: ArrayList<CheckList>
     private lateinit var adapter: ItemListAdapter
     private val persistence: CheckListPersistenceSource by lazy {
-      CheckListPersistenceImpl(applicationContext)
+        CheckListPersistenceImpl(applicationContext)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -173,7 +179,7 @@ class ItemListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
             1 -> {  // delete
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle(items[info.position].toString())
-                        .setMessage(getString(R.string.confirm_delete))
+                    .setMessage(getString(R.string.confirm_delete))
                 builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
                     persistence.deleteList(items[info.position].name + ".txt")
 //                    items.removeAt(info.position)ä

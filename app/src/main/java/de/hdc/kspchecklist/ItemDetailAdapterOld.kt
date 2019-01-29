@@ -1,12 +1,15 @@
 package de.hdc.kspchecklist
 
-import android.content.*
-import android.graphics.*
-import android.view.*
-import android.widget.*
-import de.hdc.kspchecklist.data.*
-import de.hdc.kspchecklist.domain.*
-import java.io.*
+import android.content.Context
+import android.graphics.Color
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.CheckBox
+import de.hdc.kspchecklist.data.CheckListPersistenceSource
+import de.hdc.kspchecklist.domain.CheckListItem
+import java.io.IOException
 import java.util.*
 
 /**
@@ -19,8 +22,8 @@ internal class ItemDetailAdapterOld(
     private val aContext: Context,
     private val persitence: CheckListPersistenceSource,
     private val fileName: String,
-    private val list: ArrayList<CheckListItem>)
-    : ArrayAdapter<CheckListItem>(aContext, 0, list), View.OnClickListener {
+    private val list: ArrayList<CheckListItem>
+) : ArrayAdapter<CheckListItem>(aContext, 0, list), View.OnClickListener {
 
     override fun getView(position: Int, aConvertView: View?, parent: ViewGroup): View {
         var convertView = aConvertView

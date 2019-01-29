@@ -1,13 +1,15 @@
 package de.hdc.kspchecklist
 
-import android.content.*
-import android.graphics.*
-import android.view.*
-import android.widget.*
-import androidx.recyclerview.widget.*
-import de.hdc.kspchecklist.data.*
-import de.hdc.kspchecklist.domain.*
-import java.io.*
+import android.content.Context
+import android.graphics.Color
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.CheckBox
+import androidx.recyclerview.widget.RecyclerView
+import de.hdc.kspchecklist.data.CheckListPersistenceSource
+import de.hdc.kspchecklist.domain.CheckListItem
+import java.io.IOException
 import java.util.*
 
 /**
@@ -17,17 +19,17 @@ import java.util.*
  */
 
 internal class ItemDetailAdapter(
-        private val context: Context,
-        private val persistence: CheckListPersistenceSource,
-        private val fileName: String,
-        private val list: ArrayList<CheckListItem>)
-    : RecyclerView.Adapter<ItemDetailAdapter.ViewHolder>(), View.OnClickListener {
+    private val context: Context,
+    private val persistence: CheckListPersistenceSource,
+    private val fileName: String,
+    private val list: ArrayList<CheckListItem>
+) : RecyclerView.Adapter<ItemDetailAdapter.ViewHolder>(), View.OnClickListener {
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemDetailAdapter.ViewHolder {
         // create a new view
         val v = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_detail_content, parent, false)
+            .inflate(R.layout.item_detail_content, parent, false)
         //CheckBox v = (CheckBox) test.findViewById(R.id.checkbox);
         //        CheckBox v = (CheckBox) LayoutInflater.from(parent.getContext())
         //                .inflate(R.layout.item_detail_content, parent, false);

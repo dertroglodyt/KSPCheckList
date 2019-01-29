@@ -1,9 +1,12 @@
 package de.hdc.kspchecklist
 
-import android.content.*
-import android.view.*
-import android.widget.*
-import de.hdc.kspchecklist.domain.*
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.TextView
+import de.hdc.kspchecklist.domain.CheckList
 import java.util.*
 
 /**
@@ -12,8 +15,8 @@ import java.util.*
  * Copyright by HDC, Germany
  */
 
-internal class ItemListAdapter(context: Context, objects: ArrayList<CheckList>)
-    : ArrayAdapter<CheckList>(context, 0, objects) {
+internal class ItemListAdapter(context: Context, objects: ArrayList<CheckList>) :
+    ArrayAdapter<CheckList>(context, 0, objects) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view: View

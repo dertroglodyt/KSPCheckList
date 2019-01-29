@@ -1,16 +1,19 @@
 package de.hdc.kspchecklist
 
-import android.os.*
-import android.text.*
-import android.view.*
-import android.widget.*
-import androidx.appcompat.app.*
-import androidx.recyclerview.widget.*
-import de.hdc.kspchecklist.data.*
-import de.hdc.kspchecklist.domain.*
-import de.hdc.kspchecklist.framework.*
+import android.os.Bundle
+import android.text.InputType
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import de.hdc.kspchecklist.data.CheckListPersistenceSource
+import de.hdc.kspchecklist.domain.CheckListItem
+import de.hdc.kspchecklist.framework.CheckListPersistenceImpl
 import kotlinx.android.synthetic.main.activity_item_detail.*
-import java.io.*
+import java.io.IOException
 import java.util.*
 
 /**
@@ -21,9 +24,9 @@ import java.util.*
  */
 class ItemDetailActivity : AppCompatActivity() {
 
-  private val persistence: CheckListPersistenceSource by lazy {
-    CheckListPersistenceImpl(applicationContext)
-  }
+    private val persistence: CheckListPersistenceSource by lazy {
+        CheckListPersistenceImpl(applicationContext)
+    }
 
     /*
         @Override

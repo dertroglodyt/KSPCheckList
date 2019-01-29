@@ -16,8 +16,8 @@ class SettingsActivity : PreferenceActivity() { // implements Preference.OnPrefe
 
         // Display the fragment as the main content.
         fragmentManager.beginTransaction()
-                .replace(android.R.id.content, SettingsFragment())
-                .commit()
+            .replace(android.R.id.content, SettingsFragment())
+            .commit()
         //        Preference aktienlistePref = findPreference(getString(R.string.preference_theme_key));
         //        aktienlistePref.setOnPreferenceChangeListener(this);
     }

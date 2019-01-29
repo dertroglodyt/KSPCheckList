@@ -1,6 +1,7 @@
 package de.hdc.kspchecklist.data
 
-import de.hdc.kspchecklist.domain.*
+import de.hdc.kspchecklist.domain.CheckList
+import de.hdc.kspchecklist.domain.CheckListItem
 
 /**
  * Created by DerTroglodyt on 2018-10-22 12:59.
@@ -8,11 +9,11 @@ import de.hdc.kspchecklist.domain.*
  * Copyright by HDC, Germany
  */
 interface CheckListPersistenceSource {
-  fun copyAssetsFiles()
-  fun getLists(): ArrayList<CheckList>
-  fun saveList(name: String, list: ArrayList<CheckListItem>)
-  fun renameList(oldName: String, newName: String)
-  fun deleteList(name: String)
-  fun getCheckListItems(name: String): ArrayList<CheckListItem>
-  fun addCheckList(name: String)
+    fun copyAssetsFiles()
+    fun getLists(): ArrayList<CheckList>
+    fun saveList(name: String, list: ArrayList<CheckListItem>)
+    fun renameList(oldName: String, newName: String)
+    fun deleteList(name: String)
+    fun getCheckListItems(name: String): ArrayList<CheckListItem>
+    fun addCheckList(name: String)
 }

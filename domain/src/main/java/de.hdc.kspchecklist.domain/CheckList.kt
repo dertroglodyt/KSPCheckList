@@ -5,13 +5,13 @@ package de.hdc.kspchecklist.domain
  * Email dertroglodyt@gmail.com
  * Copyright by HDC, Germany
  */
-data class CheckList(val name: String): Comparable<Any> {
+data class CheckList(val name: String) : Comparable<Any> {
 
-  override fun toString(): String {
-    return name
-  }
+    override fun toString(): String {
+        return name
+    }
 
-  override operator fun compareTo(other: Any): Int {
-    return this.name.compareTo(other.toString())
-  }
+    override operator fun compareTo(other: Any): Int {
+        return this.name.compareTo(other.toString())
+    }
 }

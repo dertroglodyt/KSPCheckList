@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
-        android:key="@string/preference_theme_key"
-        android:title="Dark theme"
-        android:defaultValue="true"
-        android:summary="@string/applies_after_restart"
-        />
+            android:key="@string/preference_theme_key"
+            android:title="Dark theme"
+            android:defaultValue="true"
+            android:summary="@string/applies_after_restart"
+    />
 </PreferenceScreen>
-    <!--<CheckBoxPreference-->
+        <!--<CheckBoxPreference-->
         <!--android:key="pref_sync"-->
         <!--android:title="@string/pref_sync"-->
         <!--android:summary="@string/pref_sync_summ"-->
         <!--android:defaultValue="true"-->
         <!--/>-->
-    <!--<ListPreference-->
+        <!--<ListPreference-->
         <!--android:dependency="pref_sync"-->
         <!--android:key="pref_syncConnectionType"-->
         <!--android:title="@string/pref_syncConnectionType"-->

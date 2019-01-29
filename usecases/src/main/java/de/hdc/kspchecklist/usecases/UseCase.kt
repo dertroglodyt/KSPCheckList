@@ -1,6 +1,6 @@
 package de.hdc.kspchecklist.usecases
 
-import de.hdc.kspchecklist.domain.*
+import de.hdc.kspchecklist.domain.Result
 import kotlinx.coroutines.*
 
 /**
@@ -8,15 +8,15 @@ import kotlinx.coroutines.*
  * Email dertroglodyt@gmail.com
  * Copyright by HDC, Germany
  */
-abstract class UseCase<out Type, in Params> where Type: Any {
+abstract class UseCase<out Type, in Params> where Type : Any {
 
-  abstract suspend fun run(params: Params): Result<Type, Any>
+    abstract suspend fun run(params: Params): Result<Type, Any>
 
-  operator fun invoke(params: Params, onResult: (Result<Type, Any>) -> Unit = {}) {
-    val job =
-        GlobalScope.async(Dispatchers.Default, CoroutineStart.DEFAULT, { run(params) })
-    GlobalScope.launch(Dispatchers.Main, CoroutineStart.DEFAULT, { onResult(job.await()) })
-  }
+    operator fun invoke(params: Params, onResult: (Result<Type, Any>) -> Unit = {}) {
+        val job =
+            GlobalScope.async(Dispatchers.Default, CoroutineStart.DEFAULT, { run(params) })
+        GlobalScope.launch(Dispatchers.Main, CoroutineStart.DEFAULT, { onResult(job.await()) })
+    }
 
-  class NoParms
+    class NoParms
 }

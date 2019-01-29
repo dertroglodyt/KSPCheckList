@@ -1,6 +1,7 @@
 package de.hdc.kspchecklist
 
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Created by DerTroglodyt on 2017-02-18 10:12.
@@ -8,10 +9,16 @@ import androidx.recyclerview.widget.*
  * Copyright by HDC, Germany
  */
 
-internal class DetailTouchHelper(private val adapter: ItemDetailAdapter)
-    : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+internal class DetailTouchHelper(private val adapter: ItemDetailAdapter) : ItemTouchHelper.SimpleCallback(
+    ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+    ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+) {
 
-    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+    override fun onMove(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        target: RecyclerView.ViewHolder
+    ): Boolean {
         adapter.swap(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }

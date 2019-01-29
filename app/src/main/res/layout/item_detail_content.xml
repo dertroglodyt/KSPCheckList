@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
-
-    <CheckBox
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/checkbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:padding="16dp"
-        android:background="#40ffff00"
-        android:longClickable="true"
-        android:clickable="true"
-        android:focusable="true" />
+        android:orientation="vertical"
+>
+
+    <CheckBox
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:background="#40ffff00"
+            android:longClickable="true"
+            android:clickable="true"
+            android:focusable="true"/>
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#00ffffff"
-        />
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#00ffffff"
+    />
 
 </LinearLayout>
 
-<!--android:onClick="checkClicked"-->
+        <!--android:onClick="checkClicked"-->

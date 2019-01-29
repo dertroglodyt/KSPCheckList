@@ -1,6 +1,7 @@
 package de.hdc.kspchecklist.data
 
-import de.hdc.kspchecklist.domain.*
+import de.hdc.kspchecklist.domain.CheckList
+import de.hdc.kspchecklist.domain.CheckListItem
 
 /**
  * Created by DerTroglodyt on 2018-10-22 12:26.
@@ -9,9 +10,9 @@ import de.hdc.kspchecklist.domain.*
  */
 class CheckListRepository(private val checkListPersistenceSource: CheckListPersistenceSource) {
 
-  fun getCheckListItems(name: String): List<CheckListItem> = checkListPersistenceSource.getCheckListItems(name)
+    fun getCheckListItems(name: String): List<CheckListItem> = checkListPersistenceSource.getCheckListItems(name)
 
-  fun getLists(): List<CheckList> = checkListPersistenceSource.getLists()
+    fun getLists(): List<CheckList> = checkListPersistenceSource.getLists()
 
-  fun addCheckList(name: String) = checkListPersistenceSource.addCheckList(name)
+    fun addCheckList(name: String) = checkListPersistenceSource.addCheckList(name)
 }

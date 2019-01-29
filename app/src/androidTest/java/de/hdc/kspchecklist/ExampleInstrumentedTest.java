@@ -1,14 +1,12 @@
 package de.hdc.kspchecklist;
 
-import android.content.*;
+import android.content.Context;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import org.junit.*;
-import org.junit.runner.*;
-
-import androidx.test.*;
-import androidx.test.runner.*;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Instrumentation test, which will execute on an Android device.

@@ -5,14 +5,14 @@ package de.hdc.kspchecklist.domain
  * Email dertroglodyt@gmail.com
  * Copyright by HDC, Germany
  */
-data class CheckListItem(val name: String, val checked: Boolean): Comparable<Any> {
+data class CheckListItem(val name: String, val checked: Boolean) : Comparable<Any> {
 
-  override fun toString(): String {
-    return "$name: $checked"
-  }
+    override fun toString(): String {
+        return "$name: $checked"
+    }
 
-  override operator fun compareTo(other: Any): Int {
-    return this.name.compareTo(other.toString())
-  }
+    override operator fun compareTo(other: Any): Int {
+        return this.name.compareTo(other.toString())
+    }
 
 }

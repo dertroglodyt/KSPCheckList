@@ -6,7 +6,7 @@
         <item>Löschen</item>
     </string-array>
     <string name="swipe_hint">Wischen zum löschen</string>
-    <string name="choose_a_checklist">Wähle eine Liste:  (lange drücken für Optionen)</string>
+    <string name="choose_a_checklist">Wähle eine Liste: (lange drücken für Optionen)</string>
     <string name="settings">Einstellungen</string>
     <string name="preference_theme_key">Dunkles Theme</string>
     <string name="applies_after_restart">Wirksam nach Neustart</string>
